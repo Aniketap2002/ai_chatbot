@@ -1,5 +1,7 @@
 import streamlit as st
 import requests
+import os
+
 
 # Page title
 st.title("HI Aniket. \n How is your day today🤖")
@@ -28,10 +30,8 @@ if user_input:
     })
 
     # Send request to FastAPI
-    response = requests.get(
-        "http://127.0.0.1:8000/chat",
-        params={"query": user_input}
-    )
+    BACKEND_URL = os.getenv("BACKEND_URL", "http://127.0.0.1:8000")
+    response = requests.get(f"{BACKEND_URL}/chat", params={"query": user_input})
 
     ai_response = response.json()["response"]
 
